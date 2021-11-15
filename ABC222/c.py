@@ -1,37 +1,29 @@
 import sys
-import numpy as np
+n, m = map(int, sys.stdin.readline().split())
 
-n, m = map(int, sys.stdin.readline().strip().split())
-hands = []
+rank = [[0, i] for i in range(2*n)]
 
-janken = {'G': 0, 'C': 1, 'P': 2}
+hand = [sys.stdin.readline().strip() for _ in range(2*n)]
 
-for i in range(2 * n):
-    hands.append(sys.stdin.readline().strip())
 
-dp = [[0 for _ in range(2 * n)] for _ in range(m + 1)]
-for i in range(m):
-    round = np.argsort(dp[i])
-    for j in range(n):
-        if (janken[hands[round[2 * j]][i]] - janken[hands[round[2 * j + 1]][i]]) % 3 == 2:
-            dp[i + 1][round[2 * j]] = dp[i][round[2 * j]] + 1
-            dp[i + 1][round[2 * j + 1]] = dp[i][round[2 * j + 1]]
-        elif (janken[hands[round[2 * j]][i]] - janken[hands[round[2 * j + 1]][i]]) % 3 == 1:
-            dp[i + 1][round[2 * j]] = dp[i][round[2 * j]]
-            dp[i + 1][round[2 * j + 1]] = dp[i][round[2 * j + 1]] + 1
-        else:
-            dp[i + 1][round[2 * j]] = dp[i][round[2 * j]]
-            dp[i + 1][round[2 * j + 1]] = dp[i][round[2 * j + 1]]
+def judge(i, j):
+    if i == j:
+        return -1
+    if i == 'G' and j == 'C':
+        return 0
+    if i == 'C' and j == 'P':
+        return 0
+    if i == 'P' and j == 'G':
+        return 0
+    return 1
 
-ans = np.array(dp[m])
-ranking = np.sort(ans)[::-1]
-i = 0
-while True:
-    idx = np.where(ans == ranking[i])[0]
-    for j in idx:
-        print(j + 1)
-        ranking[i] = False
-        i += 1
 
-    if i == len(ans):
-        break
+for j in range(m):
+    for i in range(n):
+        result = judge(hand[rank[2*i][1]][j], hand[rank[2*i+1][1]][j])
+        if result != -1:
+            rank[2*i+result][0] -= 1
+    rank.sort()
+
+for i in rank:
+    print(i[1]+1)
