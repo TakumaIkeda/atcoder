@@ -16,9 +16,8 @@ int gcd(int a, int b) {
 
 int main() {
   int n, j;
-  std::vector<int> a(n);
-
   std::cin >> n;
+  std::vector<int> a(n);
 
 
   for (int i = 0; i < n; i++) {
