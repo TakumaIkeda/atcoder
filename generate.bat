@@ -8,10 +8,3 @@ copy nul e.py
 copy nul f.py
 copy nul g.py
 copy nul h.py
-echo import sys > a.py
-echo import sys > b.py
-echo import sys > c.py
-echo import sys > d.py
-echo import sys > e.py
-echo import sys > f.py
-echo import sys > g.py
