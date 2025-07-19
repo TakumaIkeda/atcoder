@@ -2,6 +2,8 @@
 #include <iostream>
 #include <vector>
 
+typedef long long ll;
+
 using namespace std;
 
 int main()
